@@ -1,0 +1,74 @@
+/* ============================================================
+   IHMS — Blood Bank module theme (matches the main app)
+   ============================================================ */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap");
+@import "../assets/css/theme.css";
+
+body { font-family: var(--font-body); background: var(--paper); color: var(--text); margin: 0; }
+h1, h2, h3 { font-family: var(--font-head); color: var(--ink); letter-spacing: -.01em; }
+
+/* ---- Top navigation ---- */
+.navbar, .topnav { background: var(--grad-deep); box-shadow: var(--shadow-md); }
+.nav-container { max-width: 1180px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: .9rem 24px; flex-wrap: wrap; gap: .5rem; }
+.nav-logo { color: #fff; font-family: var(--font-head); font-weight: 800; font-size: 1.2rem; text-decoration: none; display: inline-flex; align-items: center; gap: .5rem; }
+.nav-logo::before { content: "🩸"; }
+.nav-menu { list-style: none; display: flex; gap: .3rem; margin: 0; padding: 0; flex-wrap: wrap; }
+.nav-item { list-style: none; }
+.nav-link { color: #cfe0f0; text-decoration: none; font-family: var(--font-head); font-weight: 600; font-size: .92rem; padding: .5rem .9rem; border-radius: var(--r-pill); transition: background .18s, color .18s; }
+.nav-link:hover { background: rgba(255,255,255,.1); color: #fff; }
+.nav-link.active { background: rgba(255,255,255,.16); color: #fff; }
+
+/* ---- Layout ---- */
+.container { max-width: 1180px; margin: 2rem auto; padding: 0 24px; }
+.login-container, .request-form, .requests-section, .blood-stock-info, .my-requests {
+  background: #fff; border: 1px solid var(--mist); border-radius: var(--r-lg);
+  box-shadow: var(--shadow-sm); padding: 1.8rem; margin-bottom: 1.6rem;
+}
+.login-container { max-width: 440px; margin: 3rem auto; }
+
+/* Welcome / hero card on index */
+.container > center, .container h1 { text-align: center; }
+.container h1 { font-size: clamp(1.6rem,3vw,2.2rem); margin-bottom: .6rem; }
+
+/* ---- Tables ---- */
+table { width: 100%; border-collapse: collapse; background: #fff; border-radius: var(--r-lg); overflow: hidden; box-shadow: var(--shadow-sm); border: 1px solid var(--mist); }
+th { background: var(--grad-brand); color: #fff; font-family: var(--font-head); font-weight: 700; text-align: left; padding: .9rem 1rem; font-size: .82rem; letter-spacing: .03em; }
+td { padding: .85rem 1rem; border-bottom: 1px solid var(--mist-50); }
+tr:last-child td { border-bottom: 0; }
+tbody tr:hover { background: var(--mist-50); }
+
+/* ---- Forms ---- */
+.form-group { margin-bottom: 1.1rem; }
+.form-group label, label { display: block; font-family: var(--font-head); font-weight: 600; color: var(--ink); margin-bottom: .4rem; font-size: .9rem; }
+input, select, textarea, .small-input {
+  width: 100%; box-sizing: border-box; font-family: var(--font-body); font-size: 1rem;
+  padding: .8rem .9rem; border: 1.5px solid var(--mist); border-radius: var(--r-md);
+  background: var(--mist-50); color: var(--text); outline: none;
+  transition: border-color .18s, box-shadow .18s, background .18s;
+}
+input:focus, select:focus, textarea:focus { border-color: var(--accent); background: #fff; box-shadow: 0 0 0 4px rgba(1,138,190,.14); }
+textarea { resize: vertical; }
+
+/* ---- Buttons ---- */
+.btn, .submit-btn, button[type="submit"] {
+  display: inline-flex; align-items: center; gap: .5rem; cursor: pointer;
+  font-family: var(--font-head); font-weight: 700; font-size: .95rem;
+  padding: .75rem 1.5rem; border: 0; border-radius: var(--r-pill);
+  background: var(--grad-brand); color: #fff; text-decoration: none;
+  box-shadow: var(--shadow-brand); transition: transform .18s, filter .18s;
+}
+.btn:hover, .submit-btn:hover, button[type="submit"]:hover { transform: translateY(-2px); filter: brightness(1.05); color: #fff; }
+.btn-small, .btn-danger, .delete-btn { padding: .45rem .9rem; font-size: .82rem; box-shadow: none; }
+.btn-danger, .delete-btn { background: linear-gradient(135deg,#e1467c,#ef5350); }
+
+/* ---- Messages ---- */
+.success-message, .error { padding: .85rem 1.1rem; border-radius: var(--r-md); margin-bottom: 1rem; font-size: .94rem; }
+.success-message { background: #e7f6ee; color: #1c7a4b; border: 1px solid #bfe6d0; }
+.error { background: #fdecec; color: #b3261e; border: 1px solid #f6c9c6; }
+
+/* ---- Misc ---- */
+/* decorative empty divs in the legacy markup — keep them out of the way */
+.overlay { display: none; }
+.blood-stock-info, .total-requests { font-size: 1rem; }
+a { color: var(--brand); }
+a:hover { color: var(--accent); }

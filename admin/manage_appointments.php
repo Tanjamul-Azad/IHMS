@@ -1,0 +1,135 @@
+<?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+session_start();
+require_once '../dbConnect.php';
+
+// Restrict to admin only
+if (!isset($_SESSION['user_id']) || !isset($_SESSION['user']['role']) || $_SESSION['user']['role'] !== 'admin') {
+    header("Location: login.php");
+    exit();
+}
+
+// Handle add appointment
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'add') {
+    $patient_id = $_POST['patient_id'];
+    $doctor_id = $_POST['doctor_id'];
+    $appointment_date = $_POST['appointment_date'];
+    $appointment_time = $_POST['appointment_time'];
+    $reason = $_POST['reason'];
+    $status = 'Pending';
+    // Combine date and time into a single datetime string
+    $appointment_datetime = $appointment_date . ' ' . $appointment_time;
+    $stmt = $pdo->prepare("INSERT INTO appointments (patient_id, doctor_id, appointment_date, reason, status) VALUES (?, ?, ?, ?, ?)");
+    $stmt->execute([$patient_id, $doctor_id, $appointment_datetime, $reason, $status]);
+    header("Location: manage_appointments.php");
+    exit();
+}
+
+// Fetch all appointments with correct joins for names
+$stmt = $pdo->query("SELECT a.*, up.first_name AS patient_first_name, up.last_name AS patient_last_name, ud.first_name AS doctor_first_name, ud.last_name AS doctor_last_name FROM appointments a JOIN patients p ON a.patient_id = p.id JOIN users up ON p.user_id = up.id JOIN doctors d ON a.doctor_id = d.id JOIN users ud ON d.user_id = ud.id ORDER BY a.appointment_date DESC");
+$appointments = $stmt->fetchAll();
+
+// Fetch all patients and doctors for the form
+$patients = $pdo->query("SELECT p.id, u.first_name, u.last_name FROM patients p JOIN users u ON p.user_id = u.id ORDER BY u.first_name, u.last_name")->fetchAll();
+$doctors = $pdo->query("SELECT d.id, u.first_name, u.last_name FROM doctors d JOIN users u ON d.user_id = u.id ORDER BY u.first_name, u.last_name")->fetchAll();
+?>
+<?php
+$page = ['role'=>'admin','active'=>'appointments','title'=>'Appointment Management','subtitle'=>'Schedule and manage appointments','user'=>$_SESSION['user'],'bootstrap'=>true];
+require_once __DIR__ . '/../includes/dash_layout.php';
+dash_head($page);
+?>
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Appointment Management</h2>
+            <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#addAppointmentModal">
+                Schedule Appointment
+            </button>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Patient</th>
+                                <th>Doctor</th>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>Reason</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($appointments as $apt): ?>
+                            <tr>
+                                <td><?php echo $apt['id']; ?></td>
+                                <td><?php echo $apt['patient_first_name'] . ' ' . $apt['patient_last_name']; ?></td>
+                                <td><?php echo $apt['doctor_first_name'] . ' ' . $apt['doctor_last_name']; ?></td>
+                                <td><?php echo date('Y-m-d', strtotime($apt['appointment_date'])); ?></td>
+                                <td><?php echo date('H:i', strtotime($apt['appointment_date'])); ?></td>
+                                <td><?php echo htmlspecialchars($apt['reason']); ?></td>
+                                <td><?php echo $apt['status']; ?></td>
+                            </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- Add Appointment Modal -->
+        <div class="modal fade" id="addAppointmentModal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Schedule Appointment</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <form action="manage_appointments.php" method="POST">
+                        <div class="modal-body">
+                            <input type="hidden" name="action" value="add">
+                            <div class="mb-3">
+                                <label class="form-label">Patient</label>
+                                <select class="form-select" name="patient_id" required>
+                                    <option value="">Select Patient</option>
+                                    <?php foreach ($patients as $pat): ?>
+                                        <option value="<?php echo $pat['id']; ?>"><?php echo $pat['first_name'] . ' ' . $pat['last_name']; ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Doctor</label>
+                                <select class="form-select" name="doctor_id" required>
+                                    <option value="">Select Doctor</option>
+                                    <?php foreach ($doctors as $doc): ?>
+                                        <option value="<?php echo $doc['id']; ?>"><?php echo $doc['first_name'] . ' ' . $doc['last_name']; ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Date</label>
+                                <input type="date" class="form-control" name="appointment_date" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Time</label>
+                                <input type="time" class="form-control" name="appointment_time" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Reason</label>
+                                <textarea class="form-control" name="reason" required></textarea>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-info">Schedule</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+<?php
+$js = "if (window.location.search.indexOf('action=add')>-1){ new bootstrap.Modal(document.getElementById('addAppointmentModal')).show(); }";
+dash_foot($page, $js);
+?> 

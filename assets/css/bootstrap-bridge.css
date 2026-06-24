@@ -1,0 +1,115 @@
+/* ============================================================
+   IHMS — Bootstrap bridge
+   Restyles Bootstrap 5 components to the IHMS theme so legacy
+   CRUD pages (with modals/tables) look on-brand without a rewrite.
+   Load order: bootstrap.css -> theme.css -> dashboard.css -> THIS
+   ============================================================ */
+
+/* ---- Typography / containers ---- */
+.dash__content { font-family: var(--font-body); }
+.dash__content h1,.dash__content h2,.dash__content h3,.dash__content h4,.dash__content h5 { font-family: var(--font-head); color: var(--ink); letter-spacing: -.01em; }
+.dash__content .container, .dash__content .container-fluid { padding: 0; max-width: none; }
+.dash__content .text-muted { color: var(--text-muted) !important; }
+.dash__content hr { border-color: var(--mist); opacity: 1; }
+
+/* ---- Cards -> panels ---- */
+.dash__content .card {
+  border: 1px solid var(--mist); border-radius: var(--r-lg);
+  box-shadow: var(--shadow-sm); background: #fff; overflow: hidden;
+}
+.dash__content .card + .card { margin-top: 1.4rem; }
+.dash__content .card-header {
+  background: #fff; border-bottom: 1px solid var(--mist);
+  padding: 1.1rem 1.4rem; font-family: var(--font-head); font-weight: 700; color: var(--ink);
+}
+.dash__content .card-body { padding: 1.4rem; }
+.dash__content .card-title { font-family: var(--font-head); color: var(--ink); }
+
+/* ---- Buttons ---- */
+.dash__content .btn, .modal .btn {
+  font-family: var(--font-head); font-weight: 700; border-radius: var(--r-pill);
+  padding: .6rem 1.3rem; border: 1.5px solid transparent; transition: transform var(--t-fast) var(--ease), box-shadow var(--t-fast) var(--ease), background var(--t-fast);
+}
+.dash__content .btn:hover, .modal .btn:hover { transform: translateY(-2px); }
+.dash__content .btn-sm, .modal .btn-sm { padding: .35rem .8rem; font-size: .82rem; }
+.dash__content .btn-lg { padding: .85rem 1.7rem; }
+.btn-primary, .dash__content .btn-primary { background: var(--grad-brand); border-color: transparent; box-shadow: var(--shadow-brand); color:#fff; }
+.btn-primary:hover { background: var(--grad-brand); filter: brightness(1.05); color:#fff; }
+.btn-success, .dash__content .btn-success { background: linear-gradient(135deg,#16a37a,#33c79a); color:#fff; }
+.btn-info,    .dash__content .btn-info    { background: linear-gradient(135deg,#018ABE,#4fb0d8); color:#fff; }
+.btn-warning, .dash__content .btn-warning { background: linear-gradient(135deg,#e8920c,#f5b342); color:#fff; }
+.btn-danger,  .dash__content .btn-danger  { background: linear-gradient(135deg,#e1467c,#ef5350); color:#fff; }
+.btn-secondary,.dash__content .btn-secondary { background: var(--ink); color:#fff; }
+.btn-outline-primary, .dash__content .btn-outline-primary { color: var(--brand); border-color: rgba(2,69,122,.35); background: transparent; }
+.btn-outline-primary:hover { background: var(--brand); color:#fff; border-color: var(--brand); }
+.dash__content .btn-light { background:#fff; border-color: var(--mist); color: var(--brand); }
+
+/* ---- Forms ---- */
+.dash__content .form-label, .modal .form-label { font-family: var(--font-head); font-weight: 600; color: var(--ink); font-size: .9rem; margin-bottom: .4rem; }
+.dash__content .form-control, .dash__content .form-select,
+.modal .form-control, .modal .form-select {
+  border: 1.5px solid var(--mist); border-radius: var(--r-md); padding: .7rem .9rem;
+  background: var(--mist-50); color: var(--text); font-family: var(--font-body);
+  transition: border-color var(--t-fast), box-shadow var(--t-fast), background var(--t-fast);
+}
+.dash__content .form-control:focus, .dash__content .form-select:focus,
+.modal .form-control:focus, .modal .form-select:focus {
+  border-color: var(--accent); background:#fff; box-shadow: 0 0 0 4px rgba(1,138,190,.14);
+}
+.dash__content .input-group-text { background: var(--mist); border: 1.5px solid var(--mist); color: var(--brand); border-radius: var(--r-md); }
+
+/* ---- Tables ---- */
+.dash__content .table { margin: 0; color: var(--text); border-color: var(--mist); }
+.dash__content .table > thead th, .dash__content .table th {
+  background: var(--mist-50); color: var(--text-muted); font-family: var(--font-head);
+  font-size: .76rem; letter-spacing: .04em; text-transform: uppercase; font-weight: 700;
+  border-bottom: 1px solid var(--mist); padding: .9rem 1rem;
+}
+.dash__content .table > tbody td, .dash__content .table td { padding: .85rem 1rem; border-color: var(--mist-50); vertical-align: middle; }
+.dash__content .table-striped > tbody > tr:nth-of-type(odd) > * { background: var(--mist-50); }
+.dash__content .table-hover > tbody > tr:hover > * { background: var(--mist); }
+.dash__content .table-responsive { border-radius: var(--r-md); }
+
+/* ---- Badges -> pills ---- */
+.dash__content .badge {
+  font-family: var(--font-head); font-weight: 700; border-radius: 99px;
+  padding: .35rem .7rem; font-size: .72rem;
+}
+.dash__content .badge.bg-success, .dash__content .bg-success { background: #e7f6ee !important; color:#1c7a4b !important; }
+.dash__content .badge.bg-warning, .dash__content .bg-warning { background: #fff5e0 !important; color:#b67700 !important; }
+.dash__content .badge.bg-danger,  .dash__content .badge.bg-secondary { background:#fdecef !important; color:#c43b51 !important; }
+.dash__content .badge.bg-primary, .dash__content .badge.bg-info { background: var(--mist) !important; color: var(--brand) !important; }
+
+/* ---- Alerts ---- */
+.dash__content .alert { border-radius: var(--r-md); border: 1px solid transparent; font-size: .94rem; }
+.dash__content .alert-success { background:#e7f6ee; color:#1c7a4b; border-color:#bfe6d0; }
+.dash__content .alert-danger  { background:#fdecec; color:#b3261e; border-color:#f6c9c6; }
+.dash__content .alert-info    { background: var(--mist-50); color: var(--brand); border-color: var(--mist); }
+.dash__content .alert-warning { background:#fff7e6; color:#9a6700; border-color:#f3e0b5; }
+
+/* ---- Nav tabs / pills ---- */
+.dash__content .nav-tabs { border-bottom: 1px solid var(--mist); gap:.2rem; }
+.dash__content .nav-tabs .nav-link { border: 0; color: var(--text-muted); font-family: var(--font-head); font-weight: 600; border-radius: 10px 10px 0 0; }
+.dash__content .nav-tabs .nav-link.active { color: var(--brand); background: transparent; border-bottom: 3px solid var(--accent); }
+.dash__content .nav-pills .nav-link { color: var(--text-muted); font-family: var(--font-head); font-weight: 600; border-radius: 99px; }
+.dash__content .nav-pills .nav-link.active { background: var(--grad-brand); color:#fff; }
+
+/* ---- List groups ---- */
+.dash__content .list-group-item { border-color: var(--mist-50); }
+.dash__content .list-group-item-primary { background: var(--mist-50); }
+
+/* ---- Modals (render at body level, so unscoped) ---- */
+.modal-content { border: 0; border-radius: var(--r-lg); box-shadow: var(--shadow-lg); overflow: hidden; }
+.modal-header { background: var(--mist-50); border-bottom: 1px solid var(--mist); padding: 1.1rem 1.4rem; }
+.modal-title { font-family: var(--font-head); font-weight: 700; color: var(--ink); }
+.modal-body { padding: 1.4rem; }
+.modal-footer { border-top: 1px solid var(--mist); padding: 1rem 1.4rem; }
+.modal .form-label { font-family: var(--font-head); font-weight: 600; color: var(--ink); }
+
+/* ---- Pagination ---- */
+.dash__content .page-link { color: var(--brand); border-color: var(--mist); }
+.dash__content .page-item.active .page-link { background: var(--brand); border-color: var(--brand); }
+
+/* ---- Helpers ---- */
+.dash__content .shadow, .dash__content .shadow-sm { box-shadow: var(--shadow-sm) !important; }
+.dash__content .rounded, .dash__content .rounded-3 { border-radius: var(--r-md) !important; }

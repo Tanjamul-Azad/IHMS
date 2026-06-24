@@ -1,0 +1,121 @@
+/* ============================================================
+   IHMS — Legacy page theme bridge
+   Loaded by ~37 inner pages (patient/doctor/admin/blood_bank) that
+   use the old Bootstrap grid layout (.sidebar + .main-content).
+   Restyles them on-brand without touching each page's markup.
+   ============================================================ */
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap");
+@import "assets/css/theme.css";
+
+body { background: var(--paper); font-family: var(--font-body); color: var(--text); }
+h1,h2,h3,h4,h5 { font-family: var(--font-head); color: var(--ink); letter-spacing: -.01em; }
+
+/* ============================== Legacy sidebar ================= */
+.sidebar {
+  background: var(--grad-deep) !important; color: #cfe0f0 !important;
+  min-height: 100vh; padding: 1.4rem .85rem !important; position: sticky; top: 0;
+}
+.sidebar h3 { color: #fff !important; font-weight: 800; font-size: 1.3rem; margin-bottom: 1.4rem !important; }
+.sidebar nav, .sidebar > nav { display: flex; flex-direction: column; gap: .15rem; }
+.sidebar a {
+  color: #cfe0f0 !important; text-decoration: none; display: flex; align-items: center; gap: .7rem;
+  padding: .72rem .9rem !important; margin: .1rem 0 !important; border-radius: 12px !important;
+  font-family: var(--font-head); font-weight: 600; font-size: .94rem;
+  transition: background .18s, color .18s;
+}
+.sidebar a:hover { background: rgba(255,255,255,.08) !important; color: #fff !important; transform: none !important; }
+.sidebar a.active { background: rgba(255,255,255,.14) !important; color: #fff !important; }
+.sidebar a i { width: 20px; text-align: center; opacity: .9; }
+
+/* ============================== Main content ================== */
+.main-content { padding: 1.8rem !important; }
+.welcome-section, .welcome-banner {
+  background: var(--grad-brand) !important; color: #fff !important;
+  border-radius: var(--r-lg); padding: 1.6rem 2rem !important; margin-bottom: 1.6rem !important;
+  box-shadow: var(--shadow-brand); border: 0 !important;
+}
+.welcome-section h2, .welcome-section h1 { color: #fff !important; margin-bottom: .3rem; }
+.welcome-section p { color: rgba(255,255,255,.9) !important; margin: 0; }
+
+/* ============================== Navbar (header.php pages) ===== */
+.navbar { background: #fff !important; box-shadow: var(--shadow-sm); border-bottom: 1px solid var(--mist); padding: .8rem 0; }
+.navbar.bg-primary, .navbar-dark.bg-primary { background: var(--grad-deep) !important; }
+.navbar-brand { font-family: var(--font-head); font-weight: 800; color: var(--brand) !important; }
+.navbar-dark .navbar-brand, .navbar-dark .nav-link { color: #fff !important; }
+.navbar .nav-link { font-family: var(--font-head); font-weight: 600; }
+
+/* ============================== Cards -> panels ============== */
+.card { border: 1px solid var(--mist); border-radius: var(--r-lg); box-shadow: var(--shadow-sm); background:#fff; overflow:hidden; }
+.card + .card { margin-top: 1.4rem; }
+.card-header { background:#fff; border-bottom: 1px solid var(--mist); padding: 1.1rem 1.4rem; font-family: var(--font-head); font-weight: 700; color: var(--ink); }
+.card-body { padding: 1.4rem; }
+.stats-card, .stat-card { border-radius: var(--r-lg) !important; border: 1px solid var(--mist); box-shadow: var(--shadow-sm); }
+
+/* ============================== Buttons ===================== */
+.btn { font-family: var(--font-head); font-weight: 700; border-radius: var(--r-pill); padding: .6rem 1.3rem; border: 1.5px solid transparent; transition: transform .18s, box-shadow .18s, filter .18s; }
+.btn:hover { transform: translateY(-2px); }
+.btn-sm { padding: .35rem .8rem; font-size: .82rem; }
+.btn-primary { background: var(--grad-brand); border-color: transparent; box-shadow: var(--shadow-brand); color:#fff; }
+.btn-primary:hover { filter: brightness(1.05); color:#fff; }
+.btn-success { background: linear-gradient(135deg,#16a37a,#33c79a); color:#fff; }
+.btn-info    { background: linear-gradient(135deg,#018ABE,#4fb0d8); color:#fff; }
+.btn-warning { background: linear-gradient(135deg,#e8920c,#f5b342); color:#fff; }
+.btn-danger  { background: linear-gradient(135deg,#e1467c,#ef5350); color:#fff; }
+.btn-secondary { background: var(--ink); color:#fff; }
+.btn-outline-primary { color: var(--brand); border-color: rgba(2,69,122,.35); background: transparent; }
+.btn-outline-primary:hover { background: var(--brand); color:#fff; }
+.btn-view { background: var(--grad-brand); color:#fff; border-radius: var(--r-pill); }
+
+/* ============================== Forms ====================== */
+.form-label { font-family: var(--font-head); font-weight: 600; color: var(--ink); font-size: .9rem; margin-bottom: .4rem; }
+.form-control, .form-select {
+  border: 1.5px solid var(--mist); border-radius: var(--r-md); padding: .7rem .9rem;
+  background: var(--mist-50); color: var(--text);
+}
+.form-control:focus, .form-select:focus { border-color: var(--accent); background:#fff; box-shadow: 0 0 0 4px rgba(1,138,190,.14); }
+.input-group-text { background: var(--mist); border: 1.5px solid var(--mist); color: var(--brand); }
+
+/* ============================== Tables ===================== */
+.table { color: var(--text); margin: 0; }
+.table > thead th, .table th {
+  background: var(--mist-50); color: var(--text-muted); font-family: var(--font-head);
+  font-size: .76rem; letter-spacing: .04em; text-transform: uppercase; font-weight: 700;
+  border-bottom: 1px solid var(--mist); padding: .9rem 1rem;
+}
+.table > tbody td, .table td { padding: .85rem 1rem; border-color: var(--mist-50); vertical-align: middle; }
+.table-striped > tbody > tr:nth-of-type(odd) > * { background: var(--mist-50); }
+.table-hover > tbody > tr:hover > * { background: var(--mist); }
+
+/* ============================== Badges / pills ============= */
+.badge { font-family: var(--font-head); font-weight: 700; border-radius: 99px; padding: .35rem .7rem; font-size: .72rem; }
+.badge.bg-success, .bg-success { background:#e7f6ee !important; color:#1c7a4b !important; }
+.badge.bg-warning, .bg-warning { background:#fff5e0 !important; color:#b67700 !important; }
+.badge.bg-danger,  .badge.bg-secondary { background:#fdecef !important; color:#c43b51 !important; }
+.badge.bg-primary, .badge.bg-info { background: var(--mist) !important; color: var(--brand) !important; }
+
+/* ============================== Alerts ==================== */
+.alert { border-radius: var(--r-md); border: 1px solid transparent; }
+.alert-success { background:#e7f6ee; color:#1c7a4b; border-color:#bfe6d0; }
+.alert-danger  { background:#fdecec; color:#b3261e; border-color:#f6c9c6; }
+.alert-info    { background: var(--mist-50); color: var(--brand); border-color: var(--mist); }
+.alert-warning { background:#fff7e6; color:#9a6700; border-color:#f3e0b5; }
+
+/* ============================== Tabs ====================== */
+.nav-tabs { border-bottom: 1px solid var(--mist); }
+.nav-tabs .nav-link { border: 0; color: var(--text-muted); font-family: var(--font-head); font-weight: 600; }
+.nav-tabs .nav-link.active { color: var(--brand); background: transparent; border-bottom: 3px solid var(--accent); }
+.nav-pills .nav-link.active { background: var(--grad-brand); }
+
+/* ============================== Modals ==================== */
+.modal-content { border: 0; border-radius: var(--r-lg); box-shadow: var(--shadow-lg); overflow: hidden; }
+.modal-header { background: var(--mist-50); border-bottom: 1px solid var(--mist); }
+.modal-title { font-family: var(--font-head); font-weight: 700; color: var(--ink); }
+.modal-footer { border-top: 1px solid var(--mist); }
+
+/* ============================== List group ================ */
+.list-group-item { border-color: var(--mist-50); }
+.list-group-item-primary { background: var(--mist-50); color: var(--brand); }
+
+/* ============================== Responsive =============== */
+@media (max-width: 767px){ .sidebar { min-height: auto; position: static; } }
